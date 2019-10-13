@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    <title>Eat Or Not</title>
+</head>
+<body style="">
+
+<h1>{{ question_tuple.tuple_name }}</h1>
+<form action="{% url 'polls:results' %}" method="post" id="questions">
+    {% csrf_token %}
+    <div id="accordion">
+        {% for question in question_tuple.question_set.all %}
+            <div class="card">
+                <div class="card-header bg-primary">
+                    <a class="card-link text-white" data-toggle="collapse" href="#collapse{{ forloop.counter }}">
+                        Question {{ forloop.counter }}: {{ question.question_text }}
+                    </a>
+                </div>
+                <div id="collapse{{ forloop.counter }}" class="collapse.show">
+                    <div class="card-body">
+                        {% if question.type == "1" %}
+                            {% for choice in question.choice_set.all %}
+                                <input type="radio" name="ration_group{{ question.id }}" id="question{{ forloop.parentloop.counter }}:ratio{{ forloop.counter }}" value="{{ choice.id }}">
+{#                                <input type="radio" name="question{{ forloop.parentloop.counter }}" id="{{ choice.id }}" value="{{ choice.id }}">#}
+                                <label for="question{{ forloop.parentloop.counter }}">{{ choice.choice_text }}</label><br>
+                            {% endfor %}
+                        {% endif %}
+                        {% if question.type == "2" %}
+                            {% for choice in question.choice_set.all %}
+                                <input type="checkbox" name="checkbox_group" id="question{{ forloop.parentloop.counter }}:checkbox{{ forloop.counter }}" value="{{ choice.id }}">
+{#                                <input type="checkbox" name="question{{ forloop.parentloop.counter }}" id="{{ choice.id }}" value="{{ choice.id }}">#}
+                                <label for="question{{ forloop.parentloop.counter }}">{{ choice.choice_text }}</label><br>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        {%  endfor %}
+    </div>
+    <p id="error" style="display:none"><strong>Please fill all questions.</strong></p>
+    <input style="margin-top: 10px; height: 50px;" id="btnSumit" type="button" value="Vote" onclick="vote()" class="btn btn-success btn-block">
+    <input style="margin-top: 10px; height: 50px;" id="btnSkip" type="button" value="Skip" onclick="$('#skip').val('skip');$('#questions').submit();" class="btn btn-info btn-block">
+    <input type="hidden" name="question_tuple_id" value="{{ question_tuple.id }}">
+    <input id="skip" type="hidden" name="skip" value="no_skip">
+</form>
+</body>
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<script type="text/javascript" language="javascript">
+    function vote() {
+
+
+        $("#questions").submit();
+    }
+</script>
+</html>

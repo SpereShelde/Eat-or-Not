@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <title>Eat Or Not</title>
+</head>
+<body style="background-color: #64cdff">
+
+<style type="text/css">
+    html, body {
+        height: 100%;
+    }
+    .container {
+        height: 100%;
+    }
+
+    .note {
+        position: absolute;
+        z-index: 10;
+        right: 0;
+        top: 0;
+        padding: 5px;
+        background: #eee;
+        max-width: 360px;
+        border: 1px dotted #bbb;
+    }
+
+</style>
+
+<div class="container">
+
+    <div class="row h-100">
+        <div class="col-sm-12 my-auto">
+            <div class="w-25 mx-auto">
+                <h2 style="color: white;font-family: Impact">Create or join a poll</h2>
+                <form style="background-color: #64cdff" action="{% url 'polls:detail' %}" method="post">
+                    {% csrf_token %}
+                    <input style="height: 60px" name="PINId" type="tel" placeholder="Poll PIN" id="game-input" class="form-control" value="">
+                    <button style="height: 60px; margin-top: 10px" type="submit" value="Submit" class="btn btn-success btn-block"><span>Enter</span></button>
+                </form>
+                {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+</html>
+
+
